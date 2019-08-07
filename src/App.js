@@ -2,6 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import postService from './services/PostService'
 import Table from 'react-bootstrap/Table';
+import SubmitBlog from './components/SubmitPost'
+import {
+  BrowserRouter as Router,
+  Route, Link, Redirect, withRouter
+} from 'react-router-dom'
+
 
 const Posts = ({ posts }) => {
   return (
@@ -24,7 +30,7 @@ const Post = ({ post }) => {
     <td>
       {post.author}
     </td>
-    {post.points}
+    {post.score}
   </tr>
 }
 
@@ -38,7 +44,10 @@ function App() {
 
 
   return (
-    <div> <Posts posts={posts}></Posts> </div>
+    <>
+      <div> <Posts posts={posts}></Posts> </div>
+      <SubmitBlog></SubmitBlog>
+    </>
   );
 }
 
