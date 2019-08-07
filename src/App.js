@@ -1,25 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import postService from './services/PostService'
+import Table from 'react-bootstrap/Table';
+
+const Posts = ({ posts }) => {
+  return (
+    <div>
+      <h2>Posts</h2>
+      <Table dark>
+        <tbody>
+          {posts.map(p => <Post post={p}></Post>)}
+        </tbody>
+      </Table>
+    </div>
+  )
+}
+
+const Post = ({ post }) => {
+  return <tr key={post.title}>
+    <td>
+      {post.title}
+    </td>
+    <td>
+      {post.author}
+    </td>
+    {post.points}
+  </tr>
+}
 
 function App() {
+
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    postService.getAll().then(response => setPosts(response))
+  }, [])
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div> <Posts posts={posts}></Posts> </div>
   );
 }
 

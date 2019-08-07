@@ -1,0 +1,18 @@
+{
+  "posts": [
+    {
+      "title": "How to post posts",
+      "author": "Sanyi",
+      "points": 1
+    },
+    {
+      "title": "How to post posts 2",
+      "author": "Sanyi 2",
+      "points": 2
+    },    {
+      "title": "How to post posts 3",
+      "author": "Sanyi 3",
+      "points": 3
+    }
+  ]
+}
