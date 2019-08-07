@@ -4,7 +4,6 @@ import postService from './services/PostService'
 import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import NavDropdown from 'react-bootstrap/NavDropdown';
 import SubmitBlog from './components/SubmitPost'
 import {
   BrowserRouter as Router,
@@ -16,6 +15,7 @@ const Menu = ({ posts }) => {
   const padding = {
     paddingRight: 30
   }
+
 
   return (
     <>
@@ -32,10 +32,10 @@ const Menu = ({ posts }) => {
       <Router>
         <div>
           <Route exact path="/" render={() => <Posts posts={posts}></Posts>} />
-          <Route path="/post" render={() => <SubmitBlog></SubmitBlog>} />
-          {/* <Route path="/posts/:id" render={({ match }) =>
-          <Anecdote anecdote={anecdoteById(match.params.id)} />
-        } /> */}
+          <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
+          <Route exact path="/posts/:id" render={({ match }) =>
+            <SinglePost posts={posts} id={match.params.id} />
+          } />
         </div>
       </Router>
     </>
@@ -47,9 +47,9 @@ const Posts = ({ posts }) => {
   return (
     <div>
       <h2>Posts</h2>
-      <Table dark>
+      <Table variant="dark">
         <tbody>
-          {posts.map(p => <Post post={p}></Post>)}
+          {posts.map(p => <Post post={p} key={p._id}></Post>)}
         </tbody>
       </Table>
     </div>
@@ -57,15 +57,17 @@ const Posts = ({ posts }) => {
 }
 
 const Post = ({ post }) => {
-  return <tr key={post.title}>
-    <td>
-      {post.title}
-    </td>
-    <td>
-      {post.author}
-    </td>
-    {post.score}
+  return <tr key={post._id}>
+    <td><Link to={`/posts/${post._id}`}>{post.title}</Link></td>
+    <td>{post.author}</td>
+    <td>{post.score}</td>
   </tr>
+}
+
+const SinglePost = ({ posts, id }) => {
+  const post = posts.find(post => post._id === id )
+  return (
+    <h2>{post.title}</h2>)
 }
 
 function App() {
