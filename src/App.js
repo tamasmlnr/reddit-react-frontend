@@ -5,6 +5,10 @@ import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SubmitBlog from './components/SubmitPost'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+
 import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
@@ -59,7 +63,12 @@ const Post = ({ post }) => {
   return <tr key={post._id}>
     <td><Link to={`/posts/${post._id}`}>{post.title}</Link></td>
     <td>{post.author}</td>
-    <td>{post.score}</td>
+    <td>
+      <FontAwesomeIcon icon={faArrowDown} size="xs" color="deepskyblue" />
+      {post.score}
+
+      <FontAwesomeIcon icon={faArrowUp} size="xs" color="deepskyblue" />
+    </td>
   </tr>
 }
 
@@ -68,8 +77,13 @@ const SinglePost = ({ id }) => {
   useEffect(() => {
     postService.getPost(id).then(response => setSinglePost(response))
   }, [])
-  return (
-    <h2>{singlePost.title}</h2>)
+  return (<div>
+    <h2>{singlePost.title}</h2>
+    by {singlePost.author}
+    <p></p>
+    {singlePost.content}
+  </div>
+  )
 }
 
 function App() {
