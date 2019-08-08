@@ -96,28 +96,18 @@ function App() {
 
   const downvote = (post, id) => {
     const changedPost = { ...post, score: post.score - 1 }
-
-    postService
-      .updatePost(id, changedPost).then(returnedPost => {
-        console.log(returnedPost);
-        setPosts(posts.map(post => post._id != id ? post : returnedPost))
-        setUpdates(updates + 1)
-      }
-      )
+    updateAndSetPosts(id, changedPost)
   }
 
   const upvote = (post, id) => {
     const changedPost = { ...post, score: post.score + 1 }
-    postService
-      .updatePost(id, changedPost).then(returnedPost => {
-        setPosts(posts.map(post => post._id !== id ? post : returnedPost))
-      })
+    updateAndSetPosts(id, changedPost)
   }
 
   const updateAndSetPosts = (id, changedPost) => {
     postService
       .updatePost(id, changedPost).then(returnedPost => {
-        setPosts(posts.map(post => post.id !== id ? post : returnedPost))
+        setPosts(posts.map(post => post._id !== id ? post : returnedPost))
       })
   }
 
