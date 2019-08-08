@@ -16,7 +16,6 @@ const Menu = ({ posts }) => {
     paddingRight: 30
   }
 
-
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -34,7 +33,7 @@ const Menu = ({ posts }) => {
           <Route exact path="/" render={() => <Posts posts={posts}></Posts>} />
           <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
           <Route exact path="/posts/:id" render={({ match }) =>
-            <SinglePost posts={posts} id={match.params.id} />
+            <SinglePost id={match.params.id} />
           } />
         </div>
       </Router>
@@ -64,10 +63,13 @@ const Post = ({ post }) => {
   </tr>
 }
 
-const SinglePost = ({ posts, id }) => {
-  const post = posts.find(post => post._id === id )
+const SinglePost = ({ id }) => {
+  const [singlePost, setSinglePost] = useState([])
+  useEffect(() => {
+    postService.getPost(id).then(response => setSinglePost(response))
+  }, [])
   return (
-    <h2>{post.title}</h2>)
+    <h2>{singlePost.title}</h2>)
 }
 
 function App() {

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useField } from '../hooks/useField'
 import postService from '../services/PostService'
 
-const SubmitBlog = ({ }) => {
+const SubmitBlog = () => {
 
   const title = useField('text')
   const author = useField('text')
