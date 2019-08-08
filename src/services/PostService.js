@@ -13,6 +13,12 @@ const getPost = async id => {
   return response.data;
 }
 
+const updatePost = async (id, newObject) => {
+  const request = axios.put(`${url}/${id}`, newObject)
+  const response = await request
+  return response.data
+}
+
 const create = async newPost => {
   const request = axios.post(url, newPost)
   console.log(newPost);
@@ -23,5 +29,6 @@ const create = async newPost => {
 export default {
   getAll,
   getPost,
+  updatePost,
   create
 }

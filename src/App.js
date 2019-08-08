@@ -15,7 +15,7 @@ import {
 } from 'react-router-dom'
 
 
-const Menu = ({ posts }) => {
+const Menu = ({ posts, upvote, downvote }) => {
   const padding = {
     paddingRight: 30
   }
@@ -34,7 +34,7 @@ const Menu = ({ posts }) => {
 
       <Router>
         <div>
-          <Route exact path="/" render={() => <Posts posts={posts}></Posts>} />
+          <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
           <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />
@@ -46,28 +46,27 @@ const Menu = ({ posts }) => {
 
 }
 
-const Posts = ({ posts }) => {
+const Posts = ({ posts, upvote, downvote }) => {
   return (
     <div>
       <h2>Posts</h2>
       <Table variant="dark">
         <tbody>
-          {posts.map(p => <Post post={p} key={p._id}></Post>)}
+          {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
         </tbody>
       </Table>
     </div>
   )
 }
 
-const Post = ({ post }) => {
+const Post = ({ post, upvote, downvote }) => {
   return <tr key={post._id}>
     <td><Link to={`/posts/${post._id}`}>{post.title}</Link></td>
     <td>{post.author}</td>
     <td>
-      <FontAwesomeIcon icon={faArrowDown} size="xs" color="deepskyblue" />
+      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" />
       {post.score}
-
-      <FontAwesomeIcon icon={faArrowUp} size="xs" color="deepskyblue" />
+      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" />
     </td>
   </tr>
 }
@@ -89,15 +88,43 @@ const SinglePost = ({ id }) => {
 function App() {
 
   const [posts, setPosts] = useState([])
+  const [updates, setUpdates] = useState(0)
 
   useEffect(() => {
     postService.getAll().then(response => setPosts(response))
   }, [])
 
+  const downvote = (post, id) => {
+    const changedPost = { ...post, score: post.score - 1 }
+
+    postService
+      .updatePost(id, changedPost).then(returnedPost => {
+        console.log(returnedPost);
+        setPosts(posts.map(post => post._id != id ? post : returnedPost))
+        setUpdates(updates + 1)
+      }
+      )
+  }
+
+  const upvote = (post, id) => {
+    const changedPost = { ...post, score: post.score + 1 }
+    postService
+      .updatePost(id, changedPost).then(returnedPost => {
+        setPosts(posts.map(post => post._id !== id ? post : returnedPost))
+      })
+  }
+
+  const updateAndSetPosts = (id, changedPost) => {
+    postService
+      .updatePost(id, changedPost).then(returnedPost => {
+        setPosts(posts.map(post => post.id !== id ? post : returnedPost))
+      })
+  }
 
   return (
     <>
-      <Menu posts={posts}></Menu>
+      <Menu posts={posts} upvote={upvote} downvote={downvote}></Menu>
+      {updates}
     </>
   );
 }
