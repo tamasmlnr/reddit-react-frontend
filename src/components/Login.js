@@ -3,12 +3,11 @@ import { useField } from '../hooks/useField'
 import loginService from '../services/LoginService'
 
 
-const Login = () => {
+const Login = ({user, setUser}) => {
 
   const usern = useField('text')
   const pass = useField('password')
   const [errorMessage, setErrorMessage] = useState('')
-  const [user, setUser] = useState(null)
 
     const handleLogin = async (event) => {
     event.preventDefault()
@@ -20,6 +19,7 @@ const Login = () => {
       })
       setUser(user)
       console.log(user);
+      // window.location = '/';
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
