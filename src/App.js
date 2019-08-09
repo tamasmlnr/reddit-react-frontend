@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SubmitBlog from './components/SubmitPost'
 import Register from './components/Register'
+import Login from './components/Login'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -35,9 +36,10 @@ const Menu = ({ posts, upvote, downvote }) => {
               <Nav.Link className="nav navbar-nav navbar-right" href="/register">register</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="disabled" disabled>
-                Welcome, user!
-              </Nav.Link>
+              {/* <Nav.Link eventKey="disabled" disabled> */}
+                {/* Welcome, user! */}
+              {/* </Nav.Link> */}
+              <Nav.Link className="nav navbar-nav navbar-right" href="/login">login</Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
@@ -47,6 +49,7 @@ const Menu = ({ posts, upvote, downvote }) => {
         <div>
           <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
           <Route exact path="/register" render={() => <Register></Register>} />
+          <Route exact path="/login" render={() => <Login></Login>} />
           <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />

@@ -1,12 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { useField } from '../hooks/useField'
-import postService from '../services/PostService'
 import userService from '../services/UserService'
 
 const Register = () => {
 
   const username = useField('text')
   const password = useField('password')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const register = async (event) => {
     event.preventDefault()
@@ -18,8 +18,17 @@ const Register = () => {
     userService
       .create(newUser)
       .then(data => {
-        username.reset(true);
-        password.reset(true);
+        username.resetValue(true);
+        password.resetValue(true);
+        setErrorMessage("Registration successful!")
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }).catch(error => {
+        setErrorMessage("Unable to register", error)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
       })
   }
 
@@ -31,7 +40,8 @@ const Register = () => {
       <div>Password:
         <input {...password} />
       </div>
-      <button type="submit">save</button>
+      <button type="submit">register</button>
+      {errorMessage}
     </form>
   )
 }
