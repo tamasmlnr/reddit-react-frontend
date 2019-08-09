@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SubmitBlog from './components/SubmitPost'
+import Register from './components/Register'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -29,12 +30,23 @@ const Menu = ({ posts, upvote, downvote }) => {
             <Nav.Link href="/">all posts</Nav.Link>
             <Nav.Link href="/post">new post</Nav.Link>
           </Nav>
+          <Nav className="justify-content-end" activeKey="/home">
+            <Nav.Item>
+              <Nav.Link className="nav navbar-nav navbar-right" href="/register">register</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="disabled" disabled>
+                Welcome, user!
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
         </Navbar.Collapse>
       </Navbar>
 
       <Router>
         <div>
           <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
+          <Route exact path="/register" render={() => <Register></Register>} />
           <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />
@@ -43,7 +55,6 @@ const Menu = ({ posts, upvote, downvote }) => {
       </Router>
     </>
   )
-
 }
 
 const Posts = ({ posts, upvote, downvote }) => {
@@ -88,7 +99,6 @@ const SinglePost = ({ id }) => {
 function App() {
 
   const [posts, setPosts] = useState([])
-  const [updates, setUpdates] = useState(0)
 
   useEffect(() => {
     postService.getAll().then(response => setPosts(response))
@@ -114,7 +124,6 @@ function App() {
   return (
     <>
       <Menu posts={posts} upvote={upvote} downvote={downvote}></Menu>
-      {updates}
     </>
   );
 }
