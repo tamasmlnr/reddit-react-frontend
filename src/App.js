@@ -24,6 +24,23 @@ const Menu = ({ posts, upvote, downvote }) => {
     paddingRight: 30
   }
 
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('postUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      postService.setToken(user.token)
+    }
+  }, [])
+
+  
+const logOut = (event) => {
+  event.preventDefault()
+  setUser(null)
+  window.localStorage.clear()
+  console.log("yee");
+}
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -33,20 +50,21 @@ const Menu = ({ posts, upvote, downvote }) => {
             <Nav.Link href="/">all posts</Nav.Link>
             <Nav.Link href="/post">new post</Nav.Link>
           </Nav>
-          {user == null ? <Nav className="justify-content-end" activeKey="/home">
-            <Nav.Item>
-              <Nav.Link className="nav navbar-nav navbar-right" href="/register">register</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-
-              <Nav.Link className="nav navbar-nav navbar-right" href="/login">login</Nav.Link>
-            </Nav.Item>
-          </Nav> 
-          : <Nav>
-                          <Nav.Link eventKey="disabled" disabled>
-                          Welcome, {user.username}!
+          {user == null ?
+            <Nav className="justify-content-end" activeKey="/home">
+              <Nav.Item>
+                <Nav.Link className="nav navbar-nav navbar-right" href="/register">register</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link className="nav navbar-nav navbar-right" href="/login">login</Nav.Link>
+              </Nav.Item>
+            </Nav>
+            :
+            <Nav>
+              <Nav.Link eventKey="disabled" disabled>
+                Welcome, {user.username}!
               </Nav.Link>
-             <Nav.Link className="nav navbar-nav navbar-right" href="/logout">log out</Nav.Link></Nav>
+              <Nav.Link className="nav navbar-nav navbar-right" href="/logout" onClick={logOut} >log out</Nav.Link></Nav>
           }
         </Navbar.Collapse>
       </Navbar>
@@ -56,6 +74,7 @@ const Menu = ({ posts, upvote, downvote }) => {
           <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
           <Route exact path="/register" render={() => <Register></Register>} />
           <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
+          <Route exact path="/logout" render ={()=>  <Redirect to='/'  />} />
           <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />

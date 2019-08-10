@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
 import { useField } from '../hooks/useField'
 import loginService from '../services/LoginService'
+import postService from '../services/PostService'
 
 
-const Login = ({user, setUser}) => {
+const Login = ({ user, setUser }) => {
 
   const usern = useField('text')
   const pass = useField('password')
   const [errorMessage, setErrorMessage] = useState('')
 
-    const handleLogin = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
     try {
       const username = usern.value
@@ -18,6 +19,10 @@ const Login = ({user, setUser}) => {
         username, password
       })
       setUser(user)
+      window.localStorage.setItem(
+        'postUser', JSON.stringify(user)
+      ) 
+      postService.setToken(user.token)
       console.log(user);
       // window.location = '/';
     } catch (exception) {

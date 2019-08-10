@@ -1,6 +1,12 @@
 import axios from 'axios'
 const url = 'http://localhost:3003/api/posts'
 
+let token = null
+
+const setToken = newToken => {
+  token = `bearer ${newToken}`
+}
+
 const getAll = async () => {
   const request = axios.get(url)
   const response = await request;
@@ -20,13 +26,19 @@ const updatePost = async (id, newObject) => {
 }
 
 const create = async newPost => {
-  const request = axios.post(url, newPost)
+
+  const config = {
+    headers: { Authorization: token },
+  }
+
+  const request = axios.post(url, newPost, config)
   console.log(newPost);
   const response = await request;
   return response.data;
 }
 
 export default {
+  setToken,
   getAll,
   getPost,
   updatePost,
