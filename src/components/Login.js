@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import { useField } from '../hooks/useField'
 import loginService from '../services/LoginService'
 import postService from '../services/PostService'
+import { withRouter } from 'react-router-dom';
 
 
-const Login = ({ user, setUser }) => {
+const Login = (props) => {
+
+  const user = props.user
+  const setUser = props.setUser
 
   const usern = useField('text')
   const pass = useField('password')
@@ -24,7 +28,7 @@ const Login = ({ user, setUser }) => {
       ) 
       postService.setToken(user.token)
       console.log(user);
-      // window.location = '/';
+      props.history.push("/")
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
@@ -48,4 +52,4 @@ const Login = ({ user, setUser }) => {
   )
 }
 
-export default Login
+export default withRouter(Login)

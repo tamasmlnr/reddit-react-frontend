@@ -48,7 +48,7 @@ const logOut = (event) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">all posts</Nav.Link>
-            <Nav.Link href="/post">new post</Nav.Link>
+            {user&&<Nav.Link href="/post">new post</Nav.Link>}
           </Nav>
           {user == null ?
             <Nav className="justify-content-end" activeKey="/home">
