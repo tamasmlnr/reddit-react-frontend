@@ -4,7 +4,7 @@ import postService from './services/PostService'
 import Table from 'react-bootstrap/Table';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import SubmitBlog from './components/SubmitPost'
+import SubmitPost from './components/SubmitPost'
 import Register from './components/Register'
 import Login from './components/Login'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -75,7 +75,7 @@ const logOut = (event) => {
           <Route exact path="/register" render={() => <Register></Register>} />
           <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
           <Route exact path="/logout" render ={()=>  <Redirect to='/'  />} />
-          <Route exact path="/post" render={() => <SubmitBlog></SubmitBlog>} />
+          <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />
           } />

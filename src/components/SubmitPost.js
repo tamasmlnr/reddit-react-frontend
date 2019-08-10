@@ -2,17 +2,15 @@ import React from 'react'
 import { useField } from '../hooks/useField'
 import postService from '../services/PostService'
 
-const SubmitBlog = () => {
+const SubmitPost = ({ user }) => {
 
   const title = useField('text')
-  const author = useField('text')
   const content = useField('text')
 
   const addPost = async (event) => {
     event.preventDefault()
     const newPost = {
       title: title.value,
-      author: author.value,
       content: content.value,
       likes: 0
     }
@@ -20,9 +18,8 @@ const SubmitBlog = () => {
     postService
       .create(newPost)
       .then(data => {
-        title.reset(true);
-        author.reset(true);
-        content.reset(true);
+        // title.reset(true);
+        // content.reset(true);
         window.location.reload(true);
       })
   }
@@ -32,9 +29,6 @@ const SubmitBlog = () => {
       <div>Title:
         <input {...title} />
       </div>
-      <div>Author:
-        <input {...author} />
-      </div>
       <div>Content:
         <input {...content} />
       </div>
@@ -43,4 +37,4 @@ const SubmitBlog = () => {
   )
 }
 
-export default SubmitBlog
+export default SubmitPost
