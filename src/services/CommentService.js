@@ -14,8 +14,10 @@ const getAll = async () => {
 }
 
 const getComment = async id => {
+  console.log("Comment service ID",id);
   const request = axios.get(`${url}/${id}`)
   const response = await request;
+  console.log(response.data);
   return response.data;
 }
 

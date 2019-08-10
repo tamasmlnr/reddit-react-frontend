@@ -33,4 +33,4 @@ const SubmitComment = ({ post }) => {
   )
 }
 
-export default SubmitPost
+export default SubmitComment

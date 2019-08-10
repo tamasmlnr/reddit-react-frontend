@@ -6,7 +6,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import SubmitPost from './components/SubmitPost'
 import Register from './components/Register'
+import Comments from './components/Comments'
 import Login from './components/Login'
+import SubmitComment from './components/SubmitComment'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
@@ -15,6 +17,7 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
 } from 'react-router-dom'
+import CommentService from './services/CommentService';
 
 
 const Menu = ({ posts, upvote, downvote }) => {
@@ -30,16 +33,17 @@ const Menu = ({ posts, upvote, downvote }) => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       postService.setToken(user.token)
+      CommentService.setToken(user.token)
     }
   }, [])
 
-  
-const logOut = (event) => {
-  event.preventDefault()
-  setUser(null)
-  window.localStorage.clear()
-  console.log("yee");
-}
+
+  const logOut = (event) => {
+    event.preventDefault()
+    setUser(null)
+    window.localStorage.clear()
+    console.log("yee");
+  }
 
   return (
     <>
@@ -48,7 +52,7 @@ const logOut = (event) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link href="/">all posts</Nav.Link>
-            {user&&<Nav.Link href="/post">new post</Nav.Link>}
+            {user && <Nav.Link href="/post">new post</Nav.Link>}
           </Nav>
           {user == null ?
             <Nav className="justify-content-end" activeKey="/home">
@@ -74,7 +78,7 @@ const logOut = (event) => {
           <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
           <Route exact path="/register" render={() => <Register></Register>} />
           <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
-          <Route exact path="/logout" render ={()=>  <Redirect to='/'  />} />
+          <Route exact path="/logout" render={() => <Redirect to='/' />} />
           <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
           <Route exact path="/posts/:id" render={({ match }) =>
             <SinglePost id={match.params.id} />
@@ -115,13 +119,17 @@ const SinglePost = ({ id }) => {
   useEffect(() => {
     postService.getPost(id).then(response => setSinglePost(response))
   }, [])
-  return (<div>
-    <h2>{singlePost.title}</h2>
-    by {singlePost.author}
-    <p></p>
-    {singlePost.content}
-  </div>
-  )
+  return (
+    <>
+      <div>
+        <h2>{singlePost.title}</h2>
+        by {singlePost.author}
+        <p></p>
+        {singlePost.content}
+      </div>
+      <SubmitComment post={singlePost}></SubmitComment>
+      {singlePost._id&&<Comments postId={singlePost._id}></Comments>}
+    </>)
 }
 
 function App() {
