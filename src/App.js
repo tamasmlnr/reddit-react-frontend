@@ -47,7 +47,7 @@ const Menu = ({ posts, upvote, downvote }) => {
 
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="dark" variant="dark" sticky="top">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
@@ -93,25 +93,27 @@ const Posts = ({ posts, upvote, downvote }) => {
   return (
     <div>
       <h2>Posts</h2>
-      <Table variant="dark">
-        <tbody>
-          {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
-        </tbody>
-      </Table>
+      {/* <Table variant="dark"> */}
+      {/* <tbody> */}
+      {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
+      {/* </tbody> */}
+      {/* </Table> */}
     </div>
   )
 }
 
 const Post = ({ post, upvote, downvote }) => {
-  return <tr key={post._id}>
-    <td><Link to={`/posts/${post._id}`}>{post.title}</Link></td>
-    <td>{post.author}</td>
-    <td>
-      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" />
-      {post.score}
-      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" />
-    </td>
-  </tr>
+
+  return (<div class="post">
+    <aside class="left-sidebar">
+      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" /><br/>
+      {post.score}<br/>
+      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br/>
+    </aside>
+    <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
+    by {post.author}</div>
+  </div>)
+
 }
 
 const SinglePost = ({ id }) => {
@@ -128,7 +130,7 @@ const SinglePost = ({ id }) => {
         {singlePost.content}
       </div>
       <SubmitComment post={singlePost}></SubmitComment>
-      {singlePost._id&&<Comments postId={singlePost._id}></Comments>}
+      {singlePost._id && <Comments postId={singlePost._id}></Comments>}
     </>)
 }
 
