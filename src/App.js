@@ -109,7 +109,7 @@ const Post = ({ post, upvote, downvote }) => {
         <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
       </aside>
       <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
-        by {post.author}</div>
+        <div class="small">by {post.author} on {post.date.substring(0,10)}</div></div>
       {post.comments.length} comments
   </div>)
 }

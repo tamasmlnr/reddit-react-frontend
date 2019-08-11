@@ -15,9 +15,7 @@ const Comments = ({ postId }) => {
   return (
     <div>
       <h2>Comments</h2>
-
       {comments.reverse().map(c => <Comment comment={c} key={c._id} ></Comment>)}
-
     </div>
   )
 }
@@ -27,7 +25,8 @@ const Comment = ({ comment }) => {
   return (
     <div class="container">
     <Card bg="dark" text="white" style={{ margin: '2em' }}>
-       <Card.Header style={{height:'2em', padding:'4px'}}> {comment.user.username}</Card.Header>
+       <Card.Header style={{height:'2em', padding:'4px'}}> {comment.user.username} 
+       <span class="small" style={{float: 'right'}}>{comment.date.substring(0,10)}</span></Card.Header>
 
         {comment.content}
 
