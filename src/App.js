@@ -50,6 +50,7 @@ const Menu = ({ posts, upvote, downvote }) => {
       <Navbar bg="dark" variant="dark" sticky="top">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+          <img src={process.env.PUBLIC_URL + '/favicon.png'} width="25px" />
           <Nav className="mr-auto">
             <Nav.Link href="/">all posts</Nav.Link>
             {user && <Nav.Link href="/post">new post</Nav.Link>}
@@ -91,27 +92,22 @@ const Menu = ({ posts, upvote, downvote }) => {
 
 const Posts = ({ posts, upvote, downvote }) => {
   return (
-    <div>
-      <h2>Posts</h2>
-      {/* <Table variant="dark"> */}
-      {/* <tbody> */}
+    <div style={{paddingTop: '4em'}}>
       {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
-      {/* </tbody> */}
-      {/* </Table> */}
     </div>
   )
 }
 
 const Post = ({ post, upvote, downvote }) => {
-
   return (<div class="post">
     <aside class="left-sidebar">
-      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" /><br/>
-      {post.score}<br/>
-      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br/>
+      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" /><br />
+      {post.score}<br />
+      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
     </aside>
     <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
-    by {post.author}</div>
+      by {post.author}</div>
+    {post.comments.length} comments
   </div>)
 
 }

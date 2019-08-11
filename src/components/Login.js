@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useField } from '../hooks/useField'
 import loginService from '../services/LoginService'
 import postService from '../services/PostService'
+import CommentService from '../services/CommentService'
 import { withRouter } from 'react-router-dom';
 
 
@@ -25,9 +26,9 @@ const Login = (props) => {
       setUser(user)
       window.localStorage.setItem(
         'postUser', JSON.stringify(user)
-      ) 
+      )
       postService.setToken(user.token)
-      console.log(user);
+      CommentService.setToken(user.token)
       props.history.push("/")
     } catch (exception) {
       setErrorMessage('Wrong credentials')

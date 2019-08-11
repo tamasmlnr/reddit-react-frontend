@@ -28,7 +28,7 @@ const updateComment = async (id, newObject) => {
 }
 
 const create = async newComment => {
-
+  console.log("token",token);
   const config = {
     headers: { Authorization: token },
   }

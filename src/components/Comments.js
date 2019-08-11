@@ -5,33 +5,37 @@ import PostService from '../services/PostService'
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([])
-  console.log("post ID",postId);
+  console.log("post ID", postId);
   useEffect(() => {
     PostService.getPost(postId).then(response => {
-      setComments(response.comments)})
+      setComments(response.comments)
+    })
   }, [])
-  console.log("comments",comments);
+  console.log("comments", comments);
   return (
     <div>
       <h2>Comments</h2>
-      <Table variant="dark">
-        <tbody>
-          {comments.map(c => <Comment comment={c} key={c._id} ></Comment>)}
-        </tbody>
-      </Table>
+
+      {comments.map(c => <Comment comment={c} key={c._id} ></Comment>)}
+
     </div>
   )
 }
 
 const Comment = ({ comment }) => {
-  return <tr key={comment._id}>
-    <td>{comment.user}</td>
-    <td>
-      {comment.content}
-    </td>
-  </tr>
+  console.log(comment);
+  return (
+    <div class="panel panel-default">
+    <div class="panel-body">
+        <p class="small"> by {comment.user.username}</p>
 
-  return (<div>{comment.content}</div>)
+        {comment.content}
+
+      </div>
+    </div>
+  )
+
+
 }
 
 export default Comments
