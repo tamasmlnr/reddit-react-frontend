@@ -5,7 +5,7 @@ import Table from 'react-bootstrap/Table';
 // import Navbar from 'react-bootstrap/Navbar';
 // import Nav from 'react-bootstrap/Nav';
 // import Panel from 'react-bootstrap/lib/Panel'
-import { Navbar, Nav, Card } from 'react-bootstrap';
+import { Navbar, Nav, Card, Form, FormControl, Button } from 'react-bootstrap';
 import SubmitPost from './components/SubmitPost'
 import Register from './components/Register'
 import Comments from './components/Comments'
@@ -25,6 +25,8 @@ import CommentService from './services/CommentService';
 const Menu = ({ posts, upvote, downvote }) => {
   //TODO Refactor: move non-menu items to the App component
   const [user, setUser] = useState(null)
+  const [searchWord, setSearchWord] = useState('')
+
   const padding = {
     paddingRight: 30
   }
@@ -47,16 +49,28 @@ const Menu = ({ posts, upvote, downvote }) => {
     console.log("yee");
   }
 
+  const handleSearch = (event) => {
+    setSearchWord(event.target.value);
+  }
+
+  const doNothing = function (e) {
+    e.preventDefault();
+  }
+
   return (
     <>
       <Navbar bg="dark" variant="dark" sticky="top">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <img src={process.env.PUBLIC_URL + '/favicon.png'} width="25px" />
+          <img src={process.env.PUBLIC_URL + '/favicon.png'} alt="reddit, kinda" width="25px" />
           <Nav className="mr-auto">
             <Nav.Link href="/">all posts</Nav.Link>
             {user && <Nav.Link href="/post">new post</Nav.Link>}
+            <Form onSubmit={doNothing}>
+              <FormControl type="text" placeholder="Search posts" className=" mr-sm-2" style={{ fontSize: '12px' }} onChange={handleSearch} />
+            </Form>
           </Nav>
+
           {user == null ?
             <Nav className="justify-content-end" activeKey="/home">
               <Nav.Item>
@@ -78,7 +92,7 @@ const Menu = ({ posts, upvote, downvote }) => {
 
       <Router>
         <div>
-          <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote}></Posts>} />
+          <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord}></Posts>} />
           <Route exact path="/register" render={() => <Register></Register>} />
           <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
           <Route exact path="/logout" render={() => <Redirect to='/' />} />
@@ -92,10 +106,11 @@ const Menu = ({ posts, upvote, downvote }) => {
   )
 }
 
-const Posts = ({ posts, upvote, downvote }) => {
-  return (
+const Posts = ({ posts, upvote, downvote, searchWord }) => {
+  let filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchWord.toLowerCase()))
+  return (filteredPosts.length === 0 ? <div class="text-center" style={{padding: '4em'}}>No results found! </div>:
     <div class="container" style={{ paddingTop: '4em' }}>
-      {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
+      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
     </div>
   )
 }
@@ -109,7 +124,7 @@ const Post = ({ post, upvote, downvote }) => {
         <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
       </aside>
       <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
-        <div class="small">by {post.author} on {post.date.substring(0,10)}</div></div>
+        <div class="small">by {post.author} on {post.date.substring(0, 10)}</div></div>
       {post.comments.length} comments
   </div>)
 }
