@@ -1,5 +1,6 @@
 import React from 'react'
 import { useField } from '../hooks/useField'
+import { Form, FormGroup, Button, FormControl } from 'react-bootstrap';
 import CommentService from '../services/CommentService'
 import commentService from '../services/CommentService';
 
@@ -17,19 +18,20 @@ const SubmitComment = ({ post }) => {
     commentService
       .create(newComment)
       .then(data => {
-        // title.reset(true);
-        // content.reset(true);
         window.location.reload(true);
       })
   }
 
   return (
-    <form onSubmit={addComment}>
-      <div>New comment:
-        <input {...content} />
-      </div>
-      <button type="submit">comment</button>
-    </form>
+
+<form onSubmit={addComment} style={{ padding: '0 4em 0 4em' }}>
+  <FormGroup role="form">
+  <FormControl componentClass="textarea" style={{ height: 150,}} {...content}/>
+  <div class="text-center">
+    <Button className="btn btn-dark btn--large centerButton" type="submit">Submit new comment</Button>
+    </div>
+  </FormGroup>
+</form>
   )
 }
 

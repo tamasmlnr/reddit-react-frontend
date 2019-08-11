@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import postService from './services/PostService'
 import Table from 'react-bootstrap/Table';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
+// import Navbar from 'react-bootstrap/Navbar';
+// import Nav from 'react-bootstrap/Nav';
+// import Panel from 'react-bootstrap/lib/Panel'
+import { Navbar, Nav, Card } from 'react-bootstrap';
 import SubmitPost from './components/SubmitPost'
 import Register from './components/Register'
 import Comments from './components/Comments'
@@ -92,24 +94,24 @@ const Menu = ({ posts, upvote, downvote }) => {
 
 const Posts = ({ posts, upvote, downvote }) => {
   return (
-    <div style={{paddingTop: '4em'}}>
+    <div class="container" style={{ paddingTop: '4em' }}>
       {posts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
     </div>
   )
 }
 
 const Post = ({ post, upvote, downvote }) => {
-  return (<div class="post">
-    <aside class="left-sidebar">
-      <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" /><br />
-      {post.score}<br />
-      <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
-    </aside>
-    <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
-      by {post.author}</div>
-    {post.comments.length} comments
+  return (
+    <div class="post">
+      <aside class="left-sidebar">
+        <FontAwesomeIcon icon={faArrowUp} onClick={() => upvote(post, post._id)} size="xs" color="deepskyblue" /><br />
+        {post.score}<br />
+        <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
+      </aside>
+      <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
+        by {post.author}</div>
+      {post.comments.length} comments
   </div>)
-
 }
 
 const SinglePost = ({ id }) => {
@@ -118,16 +120,18 @@ const SinglePost = ({ id }) => {
     postService.getPost(id).then(response => setSinglePost(response))
   }, [])
   return (
-    <>
-      <div>
-        <h2>{singlePost.title}</h2>
-        by {singlePost.author}
-        <p></p>
-        {singlePost.content}
-      </div>
+
+    <div class="container">
+      <Card bg="dark" text="white" style={{ margin: '4em' }}>
+        <Card.Header><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}</Card.Header>
+        <Card.Body>
+          {singlePost.content}
+        </Card.Body>
+      </Card>
       <SubmitComment post={singlePost}></SubmitComment>
       {singlePost._id && <Comments postId={singlePost._id}></Comments>}
-    </>)
+    </div>
+  )
 }
 
 function App() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
+import Card from 'react-bootstrap/Card';
 import CommentService from '../services/CommentService'
 import PostService from '../services/PostService'
 
@@ -8,15 +8,15 @@ const Comments = ({ postId }) => {
   console.log("post ID", postId);
   useEffect(() => {
     PostService.getPost(postId).then(response => {
+      console.log("comments", comments);  
       setComments(response.comments)
     })
   }, [])
-  console.log("comments", comments);
   return (
     <div>
       <h2>Comments</h2>
 
-      {comments.map(c => <Comment comment={c} key={c._id} ></Comment>)}
+      {comments.reverse().map(c => <Comment comment={c} key={c._id} ></Comment>)}
 
     </div>
   )
@@ -25,14 +25,14 @@ const Comments = ({ postId }) => {
 const Comment = ({ comment }) => {
   console.log(comment);
   return (
-    <div class="panel panel-default">
-    <div class="panel-body">
-        <p class="small"> by {comment.user.username}</p>
+    <div class="container">
+    <Card bg="dark" text="white" style={{ margin: '2em' }}>
+       <Card.Header style={{height:'2em', padding:'4px'}}> {comment.user.username}</Card.Header>
 
         {comment.content}
 
-      </div>
-    </div>
+        </Card>
+        </div>
   )
 
 
