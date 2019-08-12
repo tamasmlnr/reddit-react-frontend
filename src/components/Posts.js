@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+
 export const Posts = ({ posts, upvote, downvote, searchWord }) => {
   let filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchWord.toLowerCase()));
   return (filteredPosts.length === 0 ? <div class="text-center" style={{ padding: '4em' }}>No results found! </div> :
@@ -14,6 +15,16 @@ export const Posts = ({ posts, upvote, downvote, searchWord }) => {
       {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
     </div>);
 };
+
+export const PostsByUser = ({ posts, upvote, downvote, searchWord, username }) => {
+  let filteredPosts = posts.filter(post =>   post.user.username === username &&
+    post.title.toLowerCase().includes(searchWord.toLowerCase()));
+  return (filteredPosts.length === 0 ? <div class="text-center" style={{ padding: '4em' }}>No results found! </div> :
+    <div class="container" style={{ paddingTop: '4em' }}>
+      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}></Post>)}
+    </div>);
+};
+
 const Post = ({ post, upvote, downvote }) => {
   return (<div class="post">
     <aside class="left-sidebar">
@@ -22,7 +33,7 @@ const Post = ({ post, upvote, downvote }) => {
       <FontAwesomeIcon icon={faArrowDown} onClick={() => downvote(post, post._id)} size="xs" color="deepskyblue" /><br />
     </aside>
     <div class="centered"><Link to={`/posts/${post._id}`}><h6>{post.title}</h6></Link>
-      <div class="small">by {post.author} on {post.date.substring(0, 10)}</div></div>
+      <div class="small">by <Link to={`/user/${post.user.username}`}>{post.author}</Link> on {post.date.substring(0, 10)}</div></div>
     {post.comments.length} comments
   </div>);
 };

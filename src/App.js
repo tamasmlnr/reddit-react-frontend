@@ -1,15 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import postService from './services/PostService'
-import Table from 'react-bootstrap/Table';
-// import Navbar from 'react-bootstrap/Navbar';
-// import Nav from 'react-bootstrap/Nav';
-// import Panel from 'react-bootstrap/lib/Panel'
-import { Button } from 'react-bootstrap';
-
-import {
-  withRouter
-} from 'react-router-dom'
 import { Menu } from './components/Menu';
 
 

@@ -6,14 +6,10 @@ import Register from './Register';
 import Login from './Login';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import CommentService from '../services/CommentService';
-import { Posts, SinglePost } from "./Posts";
+import { Posts, SinglePost, PostsByUser } from "./Posts";
 export const Menu = ({ posts, upvote, downvote }) => {
-  //TODO Refactor: move non-menu items to the App component
   const [user, setUser] = useState(null);
   const [searchWord, setSearchWord] = useState('');
-  const padding = {
-    paddingRight: 30
-  };
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('postUser');
     if (loggedUserJSON) {
@@ -27,7 +23,6 @@ export const Menu = ({ posts, upvote, downvote }) => {
     event.preventDefault();
     setUser(null);
     window.localStorage.clear();
-    console.log("yee");
   };
   const handleSearch = (event) => {
     setSearchWord(event.target.value);
@@ -73,6 +68,7 @@ export const Menu = ({ posts, upvote, downvote }) => {
         <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
         <Route exact path="/logout" render={() => <Redirect to='/' />} />
         <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
+        <Route exact path="/user/:username" render={({ match }) =>  <PostsByUser posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} username={match.params.username}></PostsByUser>} />
         <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
       </div>
     </Router>
