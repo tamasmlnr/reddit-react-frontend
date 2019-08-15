@@ -28,28 +28,62 @@ function App() {
   };
 
   const downvote = (post, id) => {
-    const changedPost = { ...post, 
-      score: post.downvotes.includes(user.id) ? post.score+1 : post.score - 1,
-      downvotes:  post.downvotes.includes(user.id) ? 
-                post.downvotes.filter(uId=>uId!==user.id)
-                : post.downvotes.concat(user.id) 
+    if (post.upvotes.includes(user.id)) {
+      undoUpvote(post, id);
     }
-    console.log(changedPost);
+    else {
+      post.downvotes.includes(user.id) ? undoDownvote(post, id) : doDownvote(post, id);
+    }
+  }
+
+  const doDownvote = (post, id) => {
+    const changedPost = {
+      ...post,
+      score: post.score - 1,
+      downvotes: post.downvotes.concat(user.id)
+    }
+    updateAndSetPosts(id, changedPost)
+  }
+
+  const undoDownvote = (post, id) => {
+    const changedPost = {
+      ...post,
+      score: post.score + 1,
+      downvotes:
+        post.downvotes.filter(uId => uId !== user.id)
+    }
     updateAndSetPosts(id, changedPost)
   }
 
   const upvote = (post, id) => {
-    const changedPost = { ...post, 
-      score: post.upvotes.includes(user.id) ? post.score-1 : post.score + 1,
-      upvotes:  post.upvotes.includes(user.id) ? 
-                post.upvotes.filter(uId=>uId!==user.id)
-                : post.upvotes.concat(user.id) 
+    if (post.downvotes.includes(user.id)) {
+      undoDownvote(post, id);
+    }
+    else {
+      post.upvotes.includes(user.id) ? undoUpvote(post, id) : doUpvote(post, id);
+    }
+  }
+
+  const doUpvote = (post, id) => {
+    const changedPost = {
+      ...post,
+      score: post.score + 1,
+      upvotes: post.upvotes.concat(user.id)
+    }
+    updateAndSetPosts(id, changedPost)
+  }
+
+  const undoUpvote = (post, id) => {
+    const changedPost = {
+      ...post,
+      score: post.score - 1,
+      upvotes: post.upvotes.filter(uId => uId !== user.id)
     }
     updateAndSetPosts(id, changedPost)
   }
 
   const updateAndSetPosts = (id, changedPost) => {
-    postService
+    return postService
       .updatePost(id, changedPost).then(returnedPost => {
         setPosts(posts.map(post => post._id !== id ? post : returnedPost))
       })

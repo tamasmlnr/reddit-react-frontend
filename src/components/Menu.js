@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import postService from '../services/PostService';
+import React, { useState } from 'react';
 import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import SubmitPost from './SubmitPost';
 import Register from './Register';

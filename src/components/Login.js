@@ -8,7 +8,6 @@ import { withRouter } from 'react-router-dom';
 
 const Login = (props) => {
 
-  const user = props.user
   const setUser = props.setUser
 
   const usern = useField('text')

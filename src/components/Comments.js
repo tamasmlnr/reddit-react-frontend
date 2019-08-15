@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card';
-import CommentService from '../services/CommentService'
 import PostService from '../services/PostService'
 
 const Comments = ({ postId }) => {
   const [comments, setComments] = useState([])
-  console.log("post ID", postId);
   useEffect(() => {
     PostService.getPost(postId).then(response => {
-      console.log("comments", comments);  
+      console.log("comments", response.comments);  
       setComments(response.comments)
     })
   }, [])
+  console.log("comments again", comments);
   return (
     <div>
       <h2>Comments</h2>
