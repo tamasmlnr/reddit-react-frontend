@@ -28,12 +28,23 @@ function App() {
   };
 
   const downvote = (post, id) => {
-    const changedPost = { ...post, score: post.score - 1 }
+    const changedPost = { ...post, 
+      score: post.downvotes.includes(user.id) ? post.score+1 : post.score - 1,
+      downvotes:  post.downvotes.includes(user.id) ? 
+                post.downvotes.filter(uId=>uId!==user.id)
+                : post.downvotes.concat(user.id) 
+    }
+    console.log(changedPost);
     updateAndSetPosts(id, changedPost)
   }
 
   const upvote = (post, id) => {
-    const changedPost = { ...post, score: post.score + 1 }
+    const changedPost = { ...post, 
+      score: post.upvotes.includes(user.id) ? post.score-1 : post.score + 1,
+      upvotes:  post.upvotes.includes(user.id) ? 
+                post.upvotes.filter(uId=>uId!==user.id)
+                : post.upvotes.concat(user.id) 
+    }
     updateAndSetPosts(id, changedPost)
   }
 

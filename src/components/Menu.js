@@ -50,7 +50,7 @@ export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
 
     <Router>
       <div>
-        <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord}></Posts>} />
+        <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} user={user}></Posts>} />
         <Route exact path="/register" render={() => <Register></Register>} />
         <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
         <Route exact path="/logout" render={() => <Redirect to='/' />} />
