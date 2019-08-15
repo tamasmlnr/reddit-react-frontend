@@ -5,25 +5,12 @@ import SubmitPost from './SubmitPost';
 import Register from './Register';
 import Login from './Login';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import CommentService from '../services/CommentService';
+
 import { Posts, SinglePost, PostsByUser } from "./Posts";
-export const Menu = ({ posts, upvote, downvote }) => {
-  const [user, setUser] = useState(null);
+export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
+
   const [searchWord, setSearchWord] = useState('');
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('postUser');
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      postService.setToken(user.token);
-      CommentService.setToken(user.token);
-    }
-  }, []);
-  const logOut = (event) => {
-    event.preventDefault();
-    setUser(null);
-    window.localStorage.clear();
-  };
+
   const handleSearch = (event) => {
     setSearchWord(event.target.value);
   };
