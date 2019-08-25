@@ -32,9 +32,8 @@ const create = async newPost => {
   }
 
   const request = axios.post(url, newPost, config)
-  console.log(newPost);
   const response = await request;
-  return response.data;
+  return response;
 }
 
 export default {

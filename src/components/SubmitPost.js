@@ -1,8 +1,9 @@
 import React from 'react'
 import { useField } from '../hooks/useField'
 import postService from '../services/PostService'
+import { withRouter } from 'react-router-dom';
 
-const SubmitPost = ({ user }) => {
+const SubmitPost = (props) => {
 
   const title = useField('text')
   const content = useField('text')
@@ -11,16 +12,13 @@ const SubmitPost = ({ user }) => {
     event.preventDefault()
     const newPost = {
       title: title.value,
-      content: content.value,
-      likes: 0
+      content: content.value
     }
 
     postService
       .create(newPost)
-      .then(data => {
-        // title.reset(true);
-        // content.reset(true);
-        window.location.reload(true);
+      .then(response => {
+        props.history.push(`posts/${response.data._id}`)
       })
   }
 
@@ -37,4 +35,4 @@ const SubmitPost = ({ user }) => {
   )
 }
 
-export default SubmitPost
+export default withRouter(SubmitPost)
