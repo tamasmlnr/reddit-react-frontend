@@ -24,6 +24,7 @@ export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
         <Nav className="mr-auto">
           <Nav.Link href="/">all posts</Nav.Link>
           {user && <Nav.Link href="/post">new post</Nav.Link>}
+          {user && <Nav.Link href={`/user/${user.username}`}>my posts</Nav.Link>}
           <Form onSubmit={doNothing}>
             <FormControl type="text" placeholder="Search posts" className=" mr-sm-2" style={{ fontSize: '12px' }} onChange={handleSearch} />
           </Form>
@@ -54,7 +55,7 @@ export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
         <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
         <Route exact path="/logout" render={() => <Redirect to='/' />} />
         <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
-        <Route exact path="/user/:username" render={({ match }) =>  <PostsByUser posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} username={match.params.username}></PostsByUser>} />
+        <Route exact path="/user/:username" render={({ match }) =>  <PostsByUser posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} username={match.params.username} user={user}></PostsByUser>} />
         <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
       </div>
     </Router>
