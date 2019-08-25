@@ -5,9 +5,7 @@ import postService from '../services/PostService'
 import CommentService from '../services/CommentService'
 import { withRouter } from 'react-router-dom';
 
-
 const Login = (props) => {
-
   const setUser = props.setUser
 
   const usern = useField('text')

@@ -6,11 +6,9 @@ const Comments = ({ postId }) => {
   const [comments, setComments] = useState([])
   useEffect(() => {
     PostService.getPost(postId).then(response => {
-      console.log("comments", response.comments);  
       setComments(response.comments)
     })
   }, [])
-  console.log("comments again", comments);
   return (
     <div>
       <h2>Comments</h2>

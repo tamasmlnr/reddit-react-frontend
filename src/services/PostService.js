@@ -19,6 +19,13 @@ const getPost = async id => {
   return response.data;
 }
 
+const deletePost = async id => {
+  console.log("delete id" , id);
+  const request = axios.delete(`${url}/${id}`)
+  const response = await request
+  return response.data
+}
+
 const updatePost = async (id, newObject) => {
   const request = axios.put(`${url}/${id}`, newObject)
   const response = await request
@@ -41,5 +48,6 @@ export default {
   getAll,
   getPost,
   updatePost,
+  deletePost,
   create
 }

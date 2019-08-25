@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
+import DeletePost from './DeletePost';
 
 export const Posts = ({ posts, upvote, downvote, searchWord, user }) => {
   let filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchWord.toLowerCase()));
@@ -46,7 +47,9 @@ export const SinglePost = ({ id }) => {
   }, []);
   return (<div className="container">
     <Card bg="dark" text="white" style={{ margin: '4em' }}>
-      <Card.Header><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}</Card.Header>
+      <Card.Header>    <div class="col-md-2 float-right">
+      <DeletePost id={singlePost._id}></DeletePost>
+     </div><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}</Card.Header>
       <Card.Body>
         {singlePost.content}
       </Card.Body>
