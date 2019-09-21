@@ -7,7 +7,7 @@ import PageNotFound from './PageNotFound.js';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import { Posts, SinglePost, PostsByUser } from "./Posts";
-export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
+export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut }) => {
 
   const [searchWord, setSearchWord] = useState('');
 
@@ -50,17 +50,17 @@ export const Menu = ({ posts, upvote, downvote, user, setUser, logOut }) => {
     </Navbar>
 
     <Router>
-    <Switch>
-      <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} user={user}></Posts>} />
-      <Route exact path="/register" render={() => <Register></Register>} />
-      <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
-      <Route exact path="/logout" render={() => <Redirect to='/' />} />
-      <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
-      <Route exact path="/user/:username" render={({ match }) => <PostsByUser posts={posts} upvote={upvote} downvote={downvote} searchWord={searchWord} username={match.params.username} user={user}></PostsByUser>} />
-      <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
-      <Route exact path="/" component={PageNotFound} />
-      <Route component={PageNotFound} />
-    </Switch>
+      <Switch>
+        <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote} downvote={downvote} savePost = {savePost} searchWord={searchWord} user={user}></Posts>} />
+        <Route exact path="/register" render={() => <Register></Register>} />
+        <Route exact path="/login" render={() => <Login user={user} setUser={setUser}></Login>} />
+        <Route exact path="/logout" render={() => <Redirect to='/' />} />
+        <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
+        <Route exact path="/user/:username" render={({ match }) => <PostsByUser posts={posts} upvote={upvote} downvote={downvote} savePost={savePost} searchWord={searchWord} username={match.params.username} user={user}></PostsByUser>} />
+        <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
+        <Route exact path="/" component={PageNotFound} />
+        <Route component={PageNotFound} />
+      </Switch>
     </Router>
   </>);
 };

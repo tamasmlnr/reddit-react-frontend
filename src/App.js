@@ -27,6 +27,14 @@ function App() {
     window.localStorage.clear();
   };
 
+  const savePost = (post, id) => {
+    const changedPost = {
+      ...post,
+      savedBy: post.savedBy.concat(user.id)
+    }
+    updateAndSetPosts(id, changedPost)
+  }
+
   const downvote = (post, id) => {
     if (post.upvotes.includes(user.id)) {
       undoUpvote(post, id);
@@ -91,7 +99,7 @@ function App() {
 
   return (
     <>
-      <Menu posts={posts} upvote={upvote} downvote={downvote} user={user} setUser={setUser} logOut={logOut}></Menu>
+      <Menu posts={posts} upvote={upvote} downvote={downvote} savePost={savePost} user={user} setUser={setUser} logOut={logOut}></Menu>
     </>
   );
 }
