@@ -29,6 +29,16 @@ export const PostsByUser = ({ posts, upvote, downvote, savePost, searchWord, use
     </div>);
 };
 
+export const PostsSavedByUser = ({ posts, upvote, downvote, savePost, searchWord, user }) => {
+  let filteredPosts = posts.filter(post => post.savedBy.includes(user.id) &&
+    post.title.toLowerCase().includes(searchWord.toLowerCase()));
+  return (filteredPosts.length === 0 ? <div className="text-center" style={{ padding: '4em' }}>No results found! </div> :
+    <div className="container" style={{ paddingTop: '4em' }}>
+      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote} 
+      savePost = {savePost} user={user}></Post>)}
+    </div>);
+};
+
 const Post = ({ post, upvote, downvote, savePost, user }) => {
   return (<div className="post">
     {user && <aside className="left-sidebar">

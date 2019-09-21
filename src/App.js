@@ -28,9 +28,23 @@ function App() {
   };
 
   const savePost = (post, id) => {
+    if (!post.savedBy.includes(user.id)) {
+      const changedPost = {
+        ...post,
+        savedBy: post.savedBy.concat(user.id)
+      }
+      updateAndSetPosts(id, changedPost)
+    }
+    else {
+      unsavePost(post, id)
+    }
+  }
+
+  const unsavePost = (post, id) => {
+    console.log("unsave");
     const changedPost = {
       ...post,
-      savedBy: post.savedBy.concat(user.id)
+      savedBy: post.savedBy.filter(uId => uId !== user.id)
     }
     updateAndSetPosts(id, changedPost)
   }
