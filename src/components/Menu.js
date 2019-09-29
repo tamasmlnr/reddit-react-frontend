@@ -3,6 +3,7 @@ import { Navbar, Nav, Form, FormControl } from 'react-bootstrap';
 import SubmitPost from './SubmitPost';
 import Register from './Register';
 import Login from './Login';
+import Messages from './Messages';
 import PageNotFound from './PageNotFound.js';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
@@ -27,6 +28,7 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
           {user && <Nav.Link href="/post">new post</Nav.Link>}
           {user && <Nav.Link href={`/user/${user.username}`}>my posts</Nav.Link>}
           {user && <Nav.Link href={`/saved/`}>my saved posts</Nav.Link>}
+          {user && <Nav.Link href={`/messages/`}>messages</Nav.Link>}
           <Form onSubmit={doNothing}>
             <FormControl type="text" placeholder="Search posts" className=" mr-sm-2" style={{ fontSize: '12px' }} onChange={handleSearch} />
           </Form>
@@ -63,7 +65,9 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
           username={match.params.username} user={user}></PostsByUser>} />
         <Route exact path="/saved/" render={({ match }) => <PostsSavedByUser posts={posts}
           upvote={upvote} downvote={downvote} savePost={savePost} searchWord={searchWord}
-         user={user}></PostsSavedByUser>} />
+          user={user}></PostsSavedByUser>} />
+        <Route exact path="/messages/" render={({ match }) => <Messages userTo={user}
+          user={user}></Messages>} />
         <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
         <Route exact path="/" component={PageNotFound} />
         <Route component={PageNotFound} />
