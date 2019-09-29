@@ -5,6 +5,7 @@ import Register from './Register';
 import Login from './Login';
 import Messages from './Messages';
 import PageNotFound from './PageNotFound.js';
+import SubmitMessage from './SubmitMessage';
 import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 
 import { Posts, SinglePost, PostsByUser, PostsSavedByUser } from "./Posts";
@@ -68,6 +69,8 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
           user={user}></PostsSavedByUser>} />
         <Route exact path="/messages/:id" render={({ match }) => <Messages userTo={match.params.id}></Messages>} />
         <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
+        <Route exact path="/message/:userTo" render={({ match }) => <SubmitMessage userTo={match.params.userTo} 
+        userFrom = {user} />} />
         <Route exact path="/" component={PageNotFound} />
         <Route component={PageNotFound} />
       </Switch>

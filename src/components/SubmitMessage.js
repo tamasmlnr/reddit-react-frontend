@@ -23,9 +23,9 @@ const SubmitMessage = ({ userTo, userFrom }) => {
       })
   }
 
-  return (
-
-    <form onSubmit={addComment} style={{ padding: '0 4em 0 4em' }}>
+  return (<>
+<h2> Work in progress ;)</h2>
+    <form onSubmit={addComment} style={{ padding: '4em 4em 0 4em' }}>
       <FormGroup role="form">
         <FormControl componentClass="textarea" style={{ height: 150, }} {...content} />
         <div className="text-center">
@@ -33,6 +33,7 @@ const SubmitMessage = ({ userTo, userFrom }) => {
         </div>
       </FormGroup>
     </form>
+    </>
   )
 }
 
