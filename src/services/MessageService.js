@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3003/api/message'
+const url = 'http://localhost:3003/api/messages'
 
 let token = null
 
@@ -16,6 +16,7 @@ const getAll = async () => {
 const getMessage = async id => {
   const request = axios.get(`${url}/${id}`)
   const response = await request;
+  console.log(response.data);
   return response.data;
 }
 

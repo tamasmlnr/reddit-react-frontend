@@ -28,7 +28,7 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
           {user && <Nav.Link href="/post">new post</Nav.Link>}
           {user && <Nav.Link href={`/user/${user.username}`}>my posts</Nav.Link>}
           {user && <Nav.Link href={`/saved/`}>my saved posts</Nav.Link>}
-          {user && <Nav.Link href={`/messages/`}>messages</Nav.Link>}
+          {user && <Nav.Link href={`/messages/${user.id}`}>messages</Nav.Link>}
           <Form onSubmit={doNothing}>
             <FormControl type="text" placeholder="Search posts" className=" mr-sm-2" style={{ fontSize: '12px' }} onChange={handleSearch} />
           </Form>
@@ -57,7 +57,7 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
         <Route exact path="/" render={() => <Posts posts={posts} upvote={upvote}
           downvote={downvote} savePost={savePost} searchWord={searchWord} user={user}></Posts>} />
         <Route exact path="/register" render={() => <Register></Register>} />
-        <Route exact path="/login" component={<Login user={user} setUser={setUser}></Login>} />
+        <Route exact path="/login" render={()=> <Login user={user} setUser={setUser}></Login>} />
         <Route exact path="/logout" render={() => <Redirect to='/' />} />
         <Route exact path="/post" render={() => <SubmitPost user={user}></SubmitPost>} />
         <Route exact path="/user/:username" render={({ match }) => <PostsByUser posts={posts}
@@ -66,8 +66,7 @@ export const Menu = ({ posts, upvote, downvote, savePost, user, setUser, logOut 
         <Route exact path="/saved/" render={({ match }) => <PostsSavedByUser posts={posts}
           upvote={upvote} downvote={downvote} savePost={savePost} searchWord={searchWord}
           user={user}></PostsSavedByUser>} />
-        <Route exact path="/messages/" render={({ match }) => <Messages userTo={user}
-          user={user}></Messages>} />
+        <Route exact path="/messages/:id" render={({ match }) => <Messages userTo={match.params.id}></Messages>} />
         <Route exact path="/posts/:id" render={({ match }) => <SinglePost id={match.params.id} />} />
         <Route exact path="/" component={PageNotFound} />
         <Route component={PageNotFound} />

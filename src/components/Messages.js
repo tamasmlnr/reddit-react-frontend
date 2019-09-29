@@ -6,15 +6,20 @@ const Messages = ({ userTo }) => {
   const [messages, setMessages] = useState([])
   useEffect(() => {
     MessageService.getMessage(userTo).then(response => {
-      setMessages(response.messages)
+      console.log(response);
+      setMessages(response)
     })
   }, [])
+  if (messages){
   return (
     <div>
       <h2>Messages</h2>
       {messages.reverse().map(m => <Message message={m} key={m._id} ></Message>)}
     </div>
   )
+  } else {
+    return <h2>No messages found!</h2>
+  }
 }
 
 const Message = ({ message }) => {
