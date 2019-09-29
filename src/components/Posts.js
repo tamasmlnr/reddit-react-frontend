@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import DeletePost from './DeletePost';
 
@@ -15,7 +16,7 @@ export const Posts = ({ posts, upvote, downvote, savePost, searchWord, user }) =
   return (filteredPosts.length === 0 ? <div className="text-center" style={{ padding: '4em' }}>No results found! </div> :
     <div className="container" style={{ paddingTop: '4em' }}>
       {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}
-      savePost = {savePost} user={user}></Post>)}
+        savePost={savePost} user={user}></Post>)}
     </div>);
 };
 
@@ -24,8 +25,8 @@ export const PostsByUser = ({ posts, upvote, downvote, savePost, searchWord, use
     post.title.toLowerCase().includes(searchWord.toLowerCase()));
   return (filteredPosts.length === 0 ? <div className="text-center" style={{ padding: '4em' }}>No results found! </div> :
     <div className="container" style={{ paddingTop: '4em' }}>
-      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote} 
-      savePost = {savePost} user={user}></Post>)}
+      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}
+        savePost={savePost} user={user}></Post>)}
     </div>);
 };
 
@@ -34,8 +35,8 @@ export const PostsSavedByUser = ({ posts, upvote, downvote, savePost, searchWord
     post.title.toLowerCase().includes(searchWord.toLowerCase()));
   return (filteredPosts.length === 0 ? <div className="text-center" style={{ padding: '4em' }}>No results found! </div> :
     <div className="container" style={{ paddingTop: '4em' }}>
-      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote} 
-      savePost = {savePost} user={user}></Post>)}
+      {filteredPosts.map(p => <Post post={p} key={p._id} upvote={upvote} downvote={downvote}
+        savePost={savePost} user={user}></Post>)}
     </div>);
 };
 
@@ -52,7 +53,7 @@ const Post = ({ post, upvote, downvote, savePost, user }) => {
       <div className="small">by <Link to={`/user/${post.user.username}`}>{post.author}</Link> on {post.date.substring(0, 10)}</div></div>
     {post.comments.length} comments &nbsp;
     <FontAwesomeIcon icon={faBookmark} onClick={() => savePost(post, post._id)} size="xs"
-        color={user && post.savedBy.includes(user.id) ? "deepskyblue" : "grey"} /><br />
+      color={user && post.savedBy.includes(user.id) ? "deepskyblue" : "grey"} /><br />
   </div>);
 };
 export const SinglePost = ({ id }) => {
@@ -60,11 +61,13 @@ export const SinglePost = ({ id }) => {
   useEffect(() => {
     postService.getPost(id).then(response => setSinglePost(response));
   }, []);
+  console.log(singlePost);
   return (<div className="container">
     <Card bg="dark" text="white" style={{ margin: '4em' }}>
-      <Card.Header>    <div class="col-md-2 float-right">
+      <Card.Header>    <div className="col-md-2 float-right">
         <DeletePost id={singlePost._id}></DeletePost>
-      </div><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}</Card.Header>
+      </div><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}&nbsp;
+      <Link to={`/message/${singlePost.author}`}><FontAwesomeIcon icon={faEnvelope} onClick={() => console.log("kaki")} /></Link><br /></Card.Header>
       <Card.Body>
         {singlePost.content}
       </Card.Body>

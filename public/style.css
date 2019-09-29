@@ -16,6 +16,10 @@ body {
     margin-left: -1px;
 }
 
+.fa-envelope:hover {
+    color: deepskyblue;
+}
+
 .glyphicon:hover {
     color:deepskyblue;
 }
