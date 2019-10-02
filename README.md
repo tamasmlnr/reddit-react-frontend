@@ -11,13 +11,13 @@ A Reddit-like application with Node.js backend and React.js frontend
 - JWT tokens
 - Backend: Node.js, frontend: React.js with Bootstrap
 - MongoDB database
-- Custom error page  
+- Custom error page
+- Saving posts
 
 ### Features to be added  
 - Subreddits
 - Email validation
 - Private messages between users, notification upon new message  
-- Saving posts
 - Post sharing(Social/Copy URL to clipboard)  
 - Replies/comment threads  
 
