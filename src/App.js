@@ -3,6 +3,7 @@ import './App.css';
 import postService from './services/PostService'
 import { Menu } from './components/Menu';
 import CommentService from './services/CommentService';
+import MessageService from './services/MessageService';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -19,6 +20,7 @@ function App() {
       setUser(user);
       postService.setToken(user.token);
       CommentService.setToken(user.token);
+      MessageService.setToken(user.token);
     }
   }, []);
   const logOut = (event) => {

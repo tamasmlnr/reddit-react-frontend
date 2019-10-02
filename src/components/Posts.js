@@ -67,7 +67,7 @@ export const SinglePost = ({ id }) => {
       <Card.Header>    <div className="col-md-2 float-right">
         <DeletePost id={singlePost._id}></DeletePost>
       </div><Card.Title>{singlePost.title}</Card.Title>          by {singlePost.author}&nbsp;
-      <Link to={`/message/${singlePost.author}`}><FontAwesomeIcon icon={faEnvelope} onClick={() => console.log("kaki")} /></Link><br /></Card.Header>
+      <Link to={`/message/${singlePost.author}`}><FontAwesomeIcon icon={faEnvelope}></FontAwesomeIcon></Link><br /></Card.Header>
       <Card.Body>
         {singlePost.content}
       </Card.Body>

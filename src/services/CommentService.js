@@ -28,13 +28,11 @@ const updateComment = async (id, newObject) => {
 }
 
 const create = async newComment => {
-  console.log("token",token);
   const config = {
     headers: { Authorization: token },
   }
 
   const request = axios.post(url, newComment, config)
-  console.log(newComment);
   const response = await request;
   return response.data;
 }

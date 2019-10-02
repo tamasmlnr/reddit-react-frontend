@@ -21,9 +21,9 @@ const getMessage = async id => {
 }
 
 const create = async newMessage => {
-
+  console.log("token",token);
   const config = {
-    headers: { Authorization: token },
+    headers: { Authorization: token},
   }
 
   const request = axios.post(url, newMessage, config)

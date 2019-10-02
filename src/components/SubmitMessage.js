@@ -7,7 +7,7 @@ const SubmitMessage = ({ userTo, userFrom }) => {
 
   const content = useField('text')
 
-  const addComment = async (event) => {
+  const sendMessage = async (event) => {
     event.preventDefault()
     const newMessage = {
       userFrom: userFrom,
@@ -24,8 +24,7 @@ const SubmitMessage = ({ userTo, userFrom }) => {
   }
 
   return (<>
-<h2> Work in progress ;)</h2>
-    <form onSubmit={addComment} style={{ padding: '4em 4em 0 4em' }}>
+    <form onSubmit={sendMessage} style={{ padding: '4em 4em 0 4em' }}>
       <FormGroup role="form">
         <FormControl componentClass="textarea" style={{ height: 150, }} {...content} />
         <div className="text-center">
