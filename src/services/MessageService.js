@@ -16,14 +16,22 @@ const getAll = async () => {
 const getMessage = async id => {
   const request = axios.get(`${url}/${id}`)
   const response = await request;
-  console.log(response.data);
   return response.data;
 }
 
+const getMessageByUser = async user => {
+  if (user) {
+    const id = user.id;
+    const request = axios.get(`${url}/${id}`)
+    const response = await request;
+    return response.data;
+  }
+}
+
 const create = async newMessage => {
-  console.log("token",token);
+  console.log("token", token);
   const config = {
-    headers: { Authorization: token},
+    headers: { Authorization: token },
   }
 
   const request = axios.post(url, newMessage, config)
@@ -35,5 +43,6 @@ export default {
   setToken,
   getAll,
   getMessage,
+  getMessageByUser,
   create
 }

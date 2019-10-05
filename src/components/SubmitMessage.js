@@ -13,6 +13,7 @@ const SubmitMessage = ({ userTo, userFrom }) => {
       userFrom: userFrom,
       userTo: userTo,
       content: content.value,
+      isRead: false,
       date: Date.now()
     }
 
